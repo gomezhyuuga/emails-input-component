@@ -1,0 +1,37 @@
+{
+  "name": "@gh/emails-input",
+  "version": "0.1.0",
+  "description": "Emails Input part of Miro Assessment",
+  "main": "index.js",
+  "scripts": {
+    "start": "parcel index.html --open",
+    "build": "parcel build index.html",
+    "test": "jest",
+    "lint": "eslint --ext .js,.ts src"
+  },
+  "author": "gomezhyuuga",
+  "license": "ISC",
+  "jest": {
+    "preset": "ts-jest",
+    "testEnvironment": "jsdom",
+    "setupFilesAfterEnv": [
+      "./src/jest.setup.ts"
+    ]
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "@testing-library/dom": "^6.15.0",
+    "@testing-library/jest-dom": "^5.1.1",
+    "@types/jest": "^25.1.4",
+    "@typescript-eslint/eslint-plugin": "^2.22.0",
+    "@typescript-eslint/parser": "^2.22.0",
+    "eslint": "^6.8.0",
+    "eslint-config-prettier": "^6.10.0",
+    "eslint-plugin-prettier": "^3.1.2",
+    "jest": "^25.1.0",
+    "parcel-bundler": "^1.12.4",
+    "prettier": "1.19.1",
+    "ts-jest": "^25.2.1",
+    "typescript": "~3.8.3"
+  }
+}
