@@ -1,0 +1,59 @@
+html,
+body {
+  font-family: 'Open Sans', sans-serif;
+}
+
+.form {
+  width: 100%;
+  height: 300px;
+}
+
+.form__content {
+  background: #f8f8f7;
+  border-radius: 8px 8px 0px 0px;
+}
+
+.button {
+  background: #4262ff;
+  border-radius: 6px;
+
+  /* Text Styling */
+  color: #ffffff;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 14px;
+  line-height: 24px;
+  text-align: center;
+}
+
+.EmailBlock {
+  background: rgba(102, 153, 255, 0.2);
+  border-radius: 100px;
+  display: inline-block;
+  height: 24px;
+  margin: 4px;
+  padding-left: 10px;
+  padding-right: 8px;
+}
+
+.EmailBlock--invalid {
+  border-bottom: 1px dashed #d92929;
+  background: none;
+  border-radius: 0;
+  padding-left: 0;
+  padding-right: 0;
+}
+
+.EmailBlock__Content {
+  font-family: Open Sans;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 14px;
+  line-height: 24px;
+  color: #050038;
+}
+.EmailBlock__RemoveBtn {
+  width: 24px;
+  height: 24px;
+  margin-left: 8px;
+}
