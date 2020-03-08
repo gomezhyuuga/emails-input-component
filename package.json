@@ -8,6 +8,7 @@
     "build": "parcel build index.html",
     "test": "jest",
     "test:watch": "jest --watch",
+    "test:debug": "node --inspect-brk ./node_modules/.bin/jest --runInBand",
     "lint": "eslint --ext .js,.ts src"
   },
   "author": "gomezhyuuga",
