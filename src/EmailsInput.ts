@@ -58,7 +58,11 @@ export default class EmailsInput implements PublicAPI {
     this.removeEmailAt(index);
   }
   removeEmailAt(position: number) {
+    if (position < 0 || position > this.emailBlocks.length - 1)
+      throw new Error(`Invalid position ${position}`);
+
     this.emailBlocks.splice(position, 1);
+    this._onChange();
   }
   removeEmailBlock(emailBlock: EmailBlock) {
     const index = this.emailBlocks.indexOf(emailBlock);

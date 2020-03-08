@@ -51,20 +51,28 @@ describe('EmailsInput', () => {
         component = new EmailsInput(input, { initialEmails: INITIAL_EMAILS });
       });
 
-      afterEach(() => {
-        expect(component.getEmails().length).toEqual(INITIAL_EMAILS.length - 1);
-        expect(component.getEmails()).not.toContain(TO_REMOVE);
-      });
-
       describe('removeEmailAt(position : number)', () => {
         it('removes the specified block', () => {
           component.removeEmailAt(TO_REMOVE_INDX);
+          expect(component.getEmails()).not.toContain(TO_REMOVE);
+          expect(component.getEmails().length).toEqual(
+            INITIAL_EMAILS.length - 1
+          );
+        });
+        it('throws error if trying to remove Out of Bounds position', () => {
+          expect(() => component.removeEmailAt(-1)).toThrow();
+          expect(() => component.removeEmailAt(100)).toThrow();
+          expect(component.getEmails()).toHaveLength(INITIAL_EMAILS.length);
         });
       });
 
       describe('removeEmail(email : string)', () => {
         it('removes the FIRST occurence of email', () => {
           component.removeEmail(TO_REMOVE);
+          expect(component.getEmails()).not.toContain(TO_REMOVE);
+          expect(component.getEmails().length).toEqual(
+            INITIAL_EMAILS.length - 1
+          );
         });
       });
 
@@ -72,39 +80,51 @@ describe('EmailsInput', () => {
         it('removes the specified block', () => {
           const block = component.emailBlocks[TO_REMOVE_INDX];
           component.removeEmailBlock(block);
+          expect(component.getEmails()).not.toContain(TO_REMOVE);
+          expect(component.getEmails().length).toEqual(
+            INITIAL_EMAILS.length - 1
+          );
         });
       });
     });
 
     describe('onChange(fn)', () => {
-      it('fires when adding a new email', () => {
-        const fn = jest.fn();
+      let fn: jest.Mock;
+      beforeEach(() => {
+        fn = jest.fn();
         component = new EmailsInput(input, {
+          initialEmails: INITIAL_EMAILS,
           onChange: fn,
-          initialEmails: ['fernando@gomezh.dev'],
         });
         expect(fn).not.toHaveBeenCalled();
+      });
+      it('fires when adding a new email', () => {
         component.addEmail('new@email.com');
         expect(fn).toHaveBeenCalledTimes(1);
-        expect(fn).toHaveBeenCalledWith([
-          'fernando@gomezh.dev',
-          'new@email.com',
-        ]);
+        expect(fn).toHaveBeenCalledWith([...INITIAL_EMAILS, 'new@email.com']);
       });
       it('fires when replacing current emails', () => {
-        const fn = jest.fn();
-        component = new EmailsInput(input, {
-          onChange: fn,
-          initialEmails: ['fernando@gomezh.dev'],
-        });
-        expect(fn).not.toHaveBeenCalled();
         component.setEmails(['new@email.com']);
         expect(fn).toHaveBeenCalledTimes(1);
         expect(fn).toHaveBeenCalledWith(['new@email.com']);
       });
 
-      it.todo('fires after removing email');
-      it.todo('does not fires after trying to remove email not in the list');
+      it('fires after removing email', () => {
+        component.removeEmail(INITIAL_EMAILS[0]);
+        expect(fn).toHaveBeenCalledTimes(1);
+        expect(fn).toHaveBeenCalledWith(INITIAL_EMAILS.slice(1));
+      });
+      it('does not fires after trying to remove email not in the list', () => {
+        component.removeEmail('INEXISTENT');
+        try {
+          component.removeEmailAt(-1);
+          component.removeEmailAt(1000);
+          // eslint-disable-next-line no-empty
+        } catch {}
+
+        expect(fn).not.toHaveBeenCalled();
+        expect(component.getEmails()).toHaveLength(INITIAL_EMAILS.length);
+      });
     });
   });
 
