@@ -38,7 +38,7 @@ export default class EmailsInput implements PublicAPI {
   setEmails(_emails: string[]): void {
     throw new Error('Method not implemented.');
   }
-  addEmail(_email: string): void {
-    throw new Error('Method not implemented.');
+  addEmail(email: string): void {
+    this.emailBlocks.push(new EmailBlock(email));
   }
 }

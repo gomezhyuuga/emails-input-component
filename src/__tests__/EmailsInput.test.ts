@@ -25,6 +25,14 @@ describe('EmailsInput', () => {
     describe('setEmails(emails : string[])', () => {
       it.todo('replaces current list of emails');
     });
+    describe('addEmail(email : str)', () => {
+      it('adds a new email on top of the existing ones', () => {
+        const count = component.getEmails().length;
+        expect(count).toEqual(INITIAL_EMAILS.length);
+        component.addEmail('fernando@gomezh.dev');
+        expect(component.getEmails().length).toEqual(count + 1);
+      });
+    });
     describe('onChange(fn)', () => {
       it.todo('fires fn when emails change');
     });
