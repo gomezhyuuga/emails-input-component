@@ -18,7 +18,9 @@ describe('EmailsInput', () => {
     });
 
     describe('getEmails() => string[]', () => {
-      it.todo('returns current list of emails');
+      it('returns current list of emails', () => {
+        expect(component.getEmails()).toStrictEqual(INITIAL_EMAILS);
+      });
     });
     describe('setEmails(emails : string[])', () => {
       it.todo('replaces current list of emails');

@@ -8,8 +8,11 @@ export const DEFAULT_OPTIONS = {
   emailInputClass: 'EmailsInput__NewEmailInput',
 };
 
+/**
+ * v0.0.1 of Public API
+ */
 interface PublicAPI {
-  getAllEmails(): string[];
+  getEmails(): string[];
   setEmails(emails: string[]): void;
   addEmail(email: string): void;
   onChange?: (callback: (newEmails: string[]) => void) => void;
@@ -23,11 +26,13 @@ export default class EmailsInput implements PublicAPI {
 
   constructor(inputNode: HTMLElement, options?: EmailsInputOptions) {
     this.options = { ...DEFAULT_OPTIONS, ...options };
-    this.emailBlocks = [];
+    this.emailBlocks =
+      this.options.initialEmails?.map(emailStr => new EmailBlock(emailStr)) ||
+      [];
   }
 
-  getAllEmails(): string[] {
-    throw new Error('Method not implemented.');
+  getEmails(): string[] {
+    return this.emailBlocks.map(block => block.email);
   }
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   setEmails(_emails: string[]): void {
