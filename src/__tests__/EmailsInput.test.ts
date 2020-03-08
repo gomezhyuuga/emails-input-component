@@ -23,7 +23,14 @@ describe('EmailsInput', () => {
       });
     });
     describe('setEmails(emails : string[])', () => {
-      it.todo('replaces current list of emails');
+      it('replaces current list of emails', () => {
+        const count = component.getEmails().length;
+        expect(count).toEqual(INITIAL_EMAILS.length);
+        component.setEmails([]);
+        expect(component.getEmails().length).toEqual(0);
+        component.setEmails(['alona@miro.com', 'fer.gh@miro.com']);
+        expect(component.getEmails().length).toEqual(2);
+      });
     });
     describe('addEmail(email : str)', () => {
       it('adds a new email on top of the existing ones', () => {

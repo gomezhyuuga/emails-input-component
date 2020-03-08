@@ -34,9 +34,8 @@ export default class EmailsInput implements PublicAPI {
   getEmails(): string[] {
     return this.emailBlocks.map(block => block.email);
   }
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  setEmails(_emails: string[]): void {
-    throw new Error('Method not implemented.');
+  setEmails(emails: string[]): void {
+    this.emailBlocks = emails.map(email => new EmailBlock(email));
   }
   addEmail(email: string): void {
     this.emailBlocks.push(new EmailBlock(email));
