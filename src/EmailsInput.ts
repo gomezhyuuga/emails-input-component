@@ -15,6 +15,9 @@ interface PublicAPI {
   getEmails(): string[];
   setEmails(emails: string[]): void;
   addEmail(email: string): void;
+  removeEmail(email: string): void;
+  removeEmailAt(position: number): void;
+  removeEmailBlock(emailBlock: EmailBlock): void;
   onChange?: (newEmails: string[]) => void;
 }
 
@@ -45,9 +48,26 @@ export default class EmailsInput implements PublicAPI {
   addEmail(email: string) {
     this.emailBlocks.push(new EmailBlock(email));
     this._onChange();
+    // console.log(`Email added: ${email}`);
+  }
+
+  removeEmail(email: string) {
+    const index = this.getEmails().indexOf(email);
+    if (index < 0) return;
+
+    this.removeEmailAt(index);
+  }
+  removeEmailAt(position: number) {
+    this.emailBlocks.splice(position, 1);
+  }
+  removeEmailBlock(emailBlock: EmailBlock) {
+    const index = this.emailBlocks.indexOf(emailBlock);
+    if (index < 0) return;
+    this.removeEmailAt(index);
   }
 
   private _onChange() {
     if (this.onChange) this.onChange(this.getEmails());
+    // console.log(`New Emails: ${this.getEmails()}`);
   }
 }

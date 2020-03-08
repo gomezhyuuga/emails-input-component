@@ -22,6 +22,7 @@ describe('EmailsInput', () => {
         expect(component.getEmails()).toStrictEqual(INITIAL_EMAILS);
       });
     });
+
     describe('setEmails(emails : string[])', () => {
       it('replaces current list of emails', () => {
         const count = component.getEmails().length;
@@ -32,6 +33,7 @@ describe('EmailsInput', () => {
         expect(component.getEmails().length).toEqual(2);
       });
     });
+
     describe('addEmail(email : str)', () => {
       it('adds a new email on top of the existing ones', () => {
         const count = component.getEmails().length;
@@ -40,6 +42,40 @@ describe('EmailsInput', () => {
         expect(component.getEmails().length).toEqual(count + 1);
       });
     });
+
+    describe('remove...', () => {
+      const TO_REMOVE_INDX = 3;
+      const TO_REMOVE = INITIAL_EMAILS[TO_REMOVE_INDX];
+      beforeEach(() => {
+        input = document.createElement('input');
+        component = new EmailsInput(input, { initialEmails: INITIAL_EMAILS });
+      });
+
+      afterEach(() => {
+        expect(component.getEmails().length).toEqual(INITIAL_EMAILS.length - 1);
+        expect(component.getEmails()).not.toContain(TO_REMOVE);
+      });
+
+      describe('removeEmailAt(position : number)', () => {
+        it('removes the specified block', () => {
+          component.removeEmailAt(TO_REMOVE_INDX);
+        });
+      });
+
+      describe('removeEmail(email : string)', () => {
+        it('removes the FIRST occurence of email', () => {
+          component.removeEmail(TO_REMOVE);
+        });
+      });
+
+      describe('removeBlock(emailBlock : EmailBlock)', () => {
+        it('removes the specified block', () => {
+          const block = component.emailBlocks[TO_REMOVE_INDX];
+          component.removeEmailBlock(block);
+        });
+      });
+    });
+
     describe('onChange(fn)', () => {
       it('fires when adding a new email', () => {
         const fn = jest.fn();
@@ -66,6 +102,9 @@ describe('EmailsInput', () => {
         expect(fn).toHaveBeenCalledTimes(1);
         expect(fn).toHaveBeenCalledWith(['new@email.com']);
       });
+
+      it.todo('fires after removing email');
+      it.todo('does not fires after trying to remove email not in the list');
     });
   });
 
