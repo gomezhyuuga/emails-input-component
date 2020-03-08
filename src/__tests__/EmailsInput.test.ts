@@ -41,7 +41,31 @@ describe('EmailsInput', () => {
       });
     });
     describe('onChange(fn)', () => {
-      it.todo('fires fn when emails change');
+      it('fires when adding a new email', () => {
+        const fn = jest.fn();
+        component = new EmailsInput(input, {
+          onChange: fn,
+          initialEmails: ['fernando@gomezh.dev'],
+        });
+        expect(fn).not.toHaveBeenCalled();
+        component.addEmail('new@email.com');
+        expect(fn).toHaveBeenCalledTimes(1);
+        expect(fn).toHaveBeenCalledWith([
+          'fernando@gomezh.dev',
+          'new@email.com',
+        ]);
+      });
+      it('fires when replacing current emails', () => {
+        const fn = jest.fn();
+        component = new EmailsInput(input, {
+          onChange: fn,
+          initialEmails: ['fernando@gomezh.dev'],
+        });
+        expect(fn).not.toHaveBeenCalled();
+        component.setEmails(['new@email.com']);
+        expect(fn).toHaveBeenCalledTimes(1);
+        expect(fn).toHaveBeenCalledWith(['new@email.com']);
+      });
     });
   });
 
