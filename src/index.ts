@@ -1,3 +1,4 @@
+import EmailsInput from './EmailsInput';
 import EmailBlock from './EmailBlock';
 
 // var inputContainerNode = document.querySelector('#emails-input');
@@ -12,3 +13,10 @@ console.log('EMAILS', emails);
 const sandbox = document.querySelector('#sandbox');
 if (sandbox) emails.forEach(email => sandbox.appendChild(email.wrapper));
 // Handling Add email and Get emails count buttons, etc.
+
+function exportGlobals() {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  (window as any).EmailsInput = EmailsInput;
+}
+
+if (window) exportGlobals();
