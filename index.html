@@ -51,7 +51,7 @@
     <div class="modal">
       <div class="modal__body">
         <h1 class="modal__header">
-          Share <strong>Board Second</strong> with others
+          Share <strong>Very Popular Board</strong> with others
         </h1>
         <div id="emails-input3"></div>
       </div>
@@ -88,16 +88,14 @@
       const countBtn = document.getElementById('btn-getEmailsCount');
 
       addBtn.addEventListener('click', () => {
-        console.log('Adding new email...');
-        input1.addEmail('emailxx@gmail.com');
-        console.log(input1);
+        input1.addEmail(window.__randomEmail());
       });
       countBtn.addEventListener('click', () => {
         window.alert(`Count of emails: ${input1.getEmails().length}`);
       });
 
       document.getElementById('btn-addEmail2').addEventListener('click', () => {
-        input2.addEmail('secondEmail@ok.com');
+        input1.addEmail(window.__randomEmail());
       });
       document
         .getElementById('btn-getEmailsCount2')
