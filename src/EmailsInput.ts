@@ -1,6 +1,18 @@
 import EmailBlock from './EmailBlock';
 import { parsePastedText } from './utils';
 
+export interface EmailsInputOptions {
+  /** Initial set of emails to populate the input. */
+  initialEmails?: string[];
+  /** Callback when the inputs  */
+  onChange?: (newEmails: string[]) => void;
+  /** CSS class to be attached to the component wrapper tag. Defaults to `EmailsInput` */
+  componentClass?: string;
+  /** CSS class to be attached to the actual input tag. Defaults to `EmailsInput__NewEmailInput` */
+  emailInputClass?: string;
+  /** Placeholder to use in the input tag. Defaults to `add more people...` */
+  placeholder?: string;
+}
 export const DEFAULT_OPTIONS = {
   initialEmails: [] as string[],
   // Optionals
@@ -65,10 +77,6 @@ interface PublicAPI {
   onChange?: (newEmails: string[]) => void;
 }
 
-type EmailsInputOptions = Partial<typeof DEFAULT_OPTIONS> & {
-  onChange?: PublicAPI['onChange'];
-};
-
 const _ENTER_KEY = 13;
 const _COMMA_KEY = 188;
 
@@ -79,6 +87,11 @@ export default class EmailsInput implements PublicAPI {
   wrapper: HTMLElement;
   inputNode: HTMLInputElement;
 
+  /**
+   *
+   * @param {HTMLElement} inputContainerNode - DOM node to attach the input.
+   * @param {EmailsInputOptions} options - Options to pass to the input.
+   */
   constructor(inputContainerNode: HTMLElement, options?: EmailsInputOptions) {
     this.options = { ...DEFAULT_OPTIONS, ...options };
     this.emailBlocks =
