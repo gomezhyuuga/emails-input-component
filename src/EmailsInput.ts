@@ -70,8 +70,8 @@ export default class EmailsInput implements PublicAPI {
     return this.emailBlocks.map(block => block.email);
   }
   setEmails(emails: string[]) {
-    this.emailBlocks = emails.map(email => new EmailBlock(email));
-    this._onChange();
+    this.emailBlocks = [];
+    this.addEmails(emails);
   }
   addEmail(email: string) {
     const emailBlock = new EmailBlock(email);
