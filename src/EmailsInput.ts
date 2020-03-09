@@ -5,6 +5,7 @@ export const DEFAULT_OPTIONS = {
   // Optionals
   componentClass: 'EmailsInput',
   emailInputClass: 'EmailsInput__NewEmailInput',
+  placeholder: 'add more people...',
 };
 
 /**
@@ -45,6 +46,9 @@ export default class EmailsInput implements PublicAPI {
     this.inputNode = document.createElement('input');
     this.inputNode.classList.add(this.options.emailInputClass);
     this.inputNode.setAttribute('data-testid', this.options.emailInputClass);
+    this.inputNode.setAttribute('placeholder', this.options.placeholder);
+    // Remove obstrusive browser completion
+    this.inputNode.setAttribute('autocomplete', 'off');
 
     // Create initial EmailBlocks as DOM elements
     for (const emailBlock of this.emailBlocks) {
