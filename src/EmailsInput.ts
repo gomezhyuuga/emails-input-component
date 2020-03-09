@@ -65,6 +65,9 @@ export default class EmailsInput implements PublicAPI {
       this.wrapper.appendChild(emailBlock.wrapper);
     }
     this.wrapper.appendChild(this.inputNode);
+    this.wrapper.addEventListener('click', () => {
+      this.inputNode.focus();
+    });
   }
 
   getEmails(): string[] {
