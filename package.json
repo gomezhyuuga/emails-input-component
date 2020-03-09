@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "parcel index.html --open",
+    "browserslist": "browserslist",
     "build": "rm -rf docs/ && parcel build index.html --out-dir docs",
     "test": "jest",
     "test:coverage": "jest --collectCoverage",
