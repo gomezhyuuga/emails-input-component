@@ -12,3 +12,19 @@ export function parsePastedText(text: string): string[] {
   const split = _text.split(',');
   return split.map(email => email.trim()).filter(email => email.length > 0);
 }
+
+// Taken from https://stackoverflow.com/questions/1349404/generate-random-string-characters-in-javascript
+function makeid(length: number) {
+  let result = '';
+  const characters =
+    'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+  const charactersLength = characters.length;
+  for (let i = 0; i < length; i++) {
+    result += characters.charAt(Math.floor(Math.random() * charactersLength));
+  }
+  return result;
+}
+
+export function generateRandomEmail() {
+  return `${makeid(6)}@miro.com`;
+}
