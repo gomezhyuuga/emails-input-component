@@ -27,6 +27,9 @@ type EmailsInputOptions = Partial<typeof DEFAULT_OPTIONS> & {
   onChange?: PublicAPI['onChange'];
 };
 
+const _ENTER_KEY = 13;
+const _COMMA_KEY = 188;
+
 export default class EmailsInput implements PublicAPI {
   options: typeof DEFAULT_OPTIONS;
   emailBlocks: EmailBlock[];
@@ -58,6 +61,19 @@ export default class EmailsInput implements PublicAPI {
     });
     this.inputNode.addEventListener('blur', event => {
       this._onBlurInput(event);
+    });
+    // Handler for comma "," and Enter keys
+    this.inputNode.addEventListener('keydown', event => {
+      const { keyCode } = event;
+      if (keyCode === _COMMA_KEY || keyCode === _ENTER_KEY) {
+        this._parseInputText(this.inputNode.value);
+      }
+    });
+    // trim comma
+    this.inputNode.addEventListener('keyup', event => {
+      const { value } = this.inputNode;
+      if (event.keyCode === _COMMA_KEY && value[value.length - 1] === ',')
+        this.inputNode.value = value.slice(0, value.length - 1);
     });
 
     // Create initial EmailBlocks as DOM elements
