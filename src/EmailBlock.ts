@@ -1,4 +1,5 @@
 import { isValidEmail } from './utils';
+import EmailsInput from './EmailsInput';
 
 export const DEFAULT_OPTIONS = {
   componentClass: 'EmailBlock',
@@ -6,23 +7,31 @@ export const DEFAULT_OPTIONS = {
   invalidEmailClass: 'EmailBlock--invalid',
   removeButtonClass: 'EmailBlock__RemoveBtn',
   componentTag: 'div',
-  onRemove: () => {
-    console.log('removing...');
-  },
 };
 
-export type EmailBlockOptions = Partial<typeof DEFAULT_OPTIONS>;
+export type EmailBlockOptions = Partial<typeof DEFAULT_OPTIONS> & {
+  onRemove?: () => void;
+};
 
 export default class EmailBlock {
   public wrapper: HTMLElement;
   public email: string;
   public emailContentNode: HTMLElement;
   public closeButton: HTMLElement;
+  private parentInput: EmailsInput;
   private options: typeof DEFAULT_OPTIONS;
 
-  constructor(email: string, options?: EmailBlockOptions) {
+  public onRemove?: () => void;
+
+  constructor(
+    email: string,
+    parentInput: EmailsInput,
+    options?: EmailBlockOptions
+  ) {
     this.email = email;
     this.options = { ...DEFAULT_OPTIONS, ...options };
+    this.parentInput = parentInput;
+    this.onRemove = options?.onRemove;
 
     this.wrapper = document.createElement(this.options.componentTag);
     this.wrapper.classList.add(this.options.componentClass);
@@ -38,7 +47,9 @@ export default class EmailBlock {
     );
     this.closeButton.classList.add(this.options.removeButtonClass);
     this.closeButton.textContent = 'x';
-    this.closeButton.addEventListener('click', this.options.onRemove);
+    this.closeButton.addEventListener('click', _event => {
+      this._onRemove();
+    });
 
     this.wrapper.appendChild(this.emailContentNode);
     this.wrapper.appendChild(this.closeButton);
@@ -56,5 +67,11 @@ export default class EmailBlock {
 
   public isValid(): boolean {
     return isValidEmail(this.email);
+  }
+
+  private _onRemove() {
+    if (this.onRemove) this.onRemove();
+
+    this.parentInput.removeEmailBlock(this);
   }
 }

@@ -1,5 +1,10 @@
 import EmailsInput, { DEFAULT_OPTIONS } from '../EmailsInput';
-import { getByTestId, fireEvent, getByText } from '@testing-library/dom';
+import {
+  getByTestId,
+  fireEvent,
+  getByText,
+  queryByText,
+} from '@testing-library/dom';
 
 describe('EmailsInput', () => {
   let component: EmailsInput;
@@ -73,6 +78,11 @@ describe('EmailsInput', () => {
         component = new EmailsInput(input, { initialEmails: INITIAL_EMAILS });
       });
 
+      function _testNodeRemoved() {
+        component.removeEmailAt(TO_REMOVE_INDX);
+        expect(queryByText(component.wrapper, TO_REMOVE)).toBeNull();
+      }
+
       describe('removeEmailAt(position : number)', () => {
         it('removes the specified block', () => {
           component.removeEmailAt(TO_REMOVE_INDX);
@@ -81,6 +91,7 @@ describe('EmailsInput', () => {
             INITIAL_EMAILS.length - 1
           );
         });
+        it('removes corresponding DOM node', _testNodeRemoved);
         it('throws error if trying to remove Out of Bounds position', () => {
           expect(() => component.removeEmailAt(-1)).toThrow();
           expect(() => component.removeEmailAt(100)).toThrow();
@@ -96,6 +107,7 @@ describe('EmailsInput', () => {
             INITIAL_EMAILS.length - 1
           );
         });
+        it('removes corresponding DOM node', _testNodeRemoved);
       });
 
       describe('removeBlock(emailBlock : EmailBlock)', () => {
@@ -107,6 +119,7 @@ describe('EmailsInput', () => {
             INITIAL_EMAILS.length - 1
           );
         });
+        it('removes corresponding DOM node', _testNodeRemoved);
       });
     });
 

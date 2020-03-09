@@ -37,8 +37,9 @@ export default class EmailsInput implements PublicAPI {
   constructor(inputContainerNode: HTMLElement, options?: EmailsInputOptions) {
     this.options = { ...DEFAULT_OPTIONS, ...options };
     this.emailBlocks =
-      this.options.initialEmails?.map(emailStr => new EmailBlock(emailStr)) ||
-      [];
+      this.options.initialEmails?.map(
+        emailStr => new EmailBlock(emailStr, this)
+      ) || [];
 
     this.wrapper = inputContainerNode;
     this.wrapper.classList.add(this.options.componentClass);
@@ -74,7 +75,7 @@ export default class EmailsInput implements PublicAPI {
     this.addEmails(emails);
   }
   addEmail(email: string) {
-    const emailBlock = new EmailBlock(email);
+    const emailBlock = new EmailBlock(email, this);
     this.emailBlocks.push(emailBlock);
 
     this._appendEmailNode(emailBlock);
@@ -82,7 +83,7 @@ export default class EmailsInput implements PublicAPI {
     this._onChange();
   }
   addEmails(emails: string[]) {
-    const emailBlocks = emails.map(email => new EmailBlock(email));
+    const emailBlocks = emails.map(email => new EmailBlock(email, this));
     this.emailBlocks.push(...emailBlocks);
 
     for (const emailBlock of emailBlocks) {
@@ -102,7 +103,10 @@ export default class EmailsInput implements PublicAPI {
     if (position < 0 || position > this.emailBlocks.length - 1)
       throw new Error(`Invalid position ${position}`);
 
+    const emailBlock = this.emailBlocks[position];
     this.emailBlocks.splice(position, 1);
+    this._removeEmailNode(emailBlock);
+
     this._onChange();
   }
   removeEmailBlock(emailBlock: EmailBlock) {
@@ -143,5 +147,9 @@ export default class EmailsInput implements PublicAPI {
 
   private _appendEmailNode(emailBlock: EmailBlock) {
     this.wrapper.insertBefore(emailBlock.wrapper, this.inputNode);
+  }
+
+  private _removeEmailNode(emailBlock: EmailBlock) {
+    this.wrapper.removeChild(emailBlock.wrapper);
   }
 }

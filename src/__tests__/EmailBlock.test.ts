@@ -3,16 +3,19 @@ import { getByText, getByTestId } from '@testing-library/dom';
 import '@testing-library/jest-dom/extend-expect';
 
 import EmailBlock, { DEFAULT_OPTIONS } from '../EmailBlock';
+import EmailsInput from '../EmailsInput';
 
 const _TESTID_REMOVE_BTN = DEFAULT_OPTIONS.removeButtonClass;
 
 describe('EmailBlock', () => {
   let component: EmailBlock;
+  let parentInput: EmailsInput;
   const VALID_EMAIL = 'john@miro.com';
   const INVALID_EMAILS = ['x', 'john@', ''];
 
   beforeEach(() => {
-    component = new EmailBlock(VALID_EMAIL);
+    parentInput = new EmailsInput(document.createElement('div'));
+    component = new EmailBlock(VALID_EMAIL, parentInput);
   });
 
   describe('constructor()', () => {
@@ -45,7 +48,7 @@ describe('EmailBlock', () => {
   describe('onRemove()', () => {
     it('calls onRemove callback when remove is clicked', () => {
       const fn = jest.fn();
-      component = new EmailBlock(VALID_EMAIL, { onRemove: fn });
+      component = new EmailBlock(VALID_EMAIL, parentInput, { onRemove: fn });
       expect(fn).not.toHaveBeenCalled();
       const btn = getByTestId(component.wrapper, _TESTID_REMOVE_BTN);
       btn.click();
@@ -60,7 +63,7 @@ describe('EmailBlock', () => {
       ).toBeFalsy();
     });
     it('adds $invalidClass if email is invalid', () => {
-      component = new EmailBlock(INVALID_EMAILS[0]);
+      component = new EmailBlock(INVALID_EMAILS[0], parentInput);
       expect(
         component.wrapper.classList.contains(DEFAULT_OPTIONS.invalidEmailClass)
       ).toBeTruthy();
