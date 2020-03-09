@@ -11,6 +11,7 @@
       rel="stylesheet"
     />
     <link rel="stylesheet" href="src/index.css" />
+    <link rel="canonical" href="src/favicon.png" />
   </head>
 
   <body>
@@ -95,7 +96,7 @@
       });
 
       document.getElementById('btn-addEmail2').addEventListener('click', () => {
-        input1.addEmail(window.__randomEmail());
+        input2.addEmail(window.__randomEmail());
       });
       document
         .getElementById('btn-getEmailsCount2')
@@ -105,7 +106,7 @@
 
       document.getElementById('btn-addEmail3').addEventListener('click', () => {
         const length = input3.getEmails().length;
-        for (let i = 0; i <= 30; i++)
+        for (let i = 0; i < 30; i++)
           input3.addEmail(`email-${length + i + 1}@example.com`);
       });
       document
