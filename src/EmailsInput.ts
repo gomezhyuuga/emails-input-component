@@ -1,4 +1,5 @@
 import EmailBlock from './EmailBlock';
+import { parsePastedText } from './utils';
 
 export const DEFAULT_OPTIONS = {
   initialEmails: [] as string[],
@@ -31,7 +32,7 @@ export default class EmailsInput implements PublicAPI {
   emailBlocks: EmailBlock[];
   onChange?: (newEmails: string[]) => void;
   wrapper: HTMLElement;
-  inputNode: HTMLElement;
+  inputNode: HTMLInputElement;
 
   constructor(inputContainerNode: HTMLElement, options?: EmailsInputOptions) {
     this.options = { ...DEFAULT_OPTIONS, ...options };
@@ -50,6 +51,13 @@ export default class EmailsInput implements PublicAPI {
     this.inputNode.setAttribute('placeholder', this.options.placeholder);
     // Remove obstrusive browser completion
     this.inputNode.setAttribute('autocomplete', 'off');
+    // onPaste functionality
+    this.inputNode.addEventListener('paste', event => {
+      this._onPaste(event);
+    });
+    this.inputNode.addEventListener('blur', event => {
+      this._onBlurInput(event);
+    });
 
     // Create initial EmailBlocks as DOM elements
     for (const emailBlock of this.emailBlocks) {
@@ -99,5 +107,32 @@ export default class EmailsInput implements PublicAPI {
   private _onChange() {
     if (this.onChange) this.onChange(this.getEmails());
     // console.log(`New Emails: ${this.getEmails()}`);
+  }
+
+  // info: https://developer.mozilla.org/en-US/docs/Web/API/Element/paste_event
+  private _onPaste(event: ClipboardEvent) {
+    console.log('something was pasted');
+    const clipboardData =
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      event.clipboardData || (window as any).clipboardData;
+
+    if (!clipboardData) return;
+    const pastedText = clipboardData.getData('text');
+
+    event.preventDefault();
+
+    if (pastedText) this._parseInputText(pastedText);
+  }
+
+  private _onBlurInput(_event: FocusEvent) {
+    this._parseInputText(this.inputNode.value);
+  }
+
+  private _parseInputText(text: string) {
+    const emails = parsePastedText(text);
+    this.addEmails(emails);
+
+    // Reset input
+    this.inputNode.value = '';
   }
 }
