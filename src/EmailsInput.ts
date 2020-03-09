@@ -113,12 +113,10 @@ export default class EmailsInput implements PublicAPI {
 
   private _onChange() {
     if (this.onChange) this.onChange(this.getEmails());
-    // console.log(`New Emails: ${this.getEmails()}`);
   }
 
   // info: https://developer.mozilla.org/en-US/docs/Web/API/Element/paste_event
   private _onPaste(event: ClipboardEvent) {
-    console.log('something was pasted');
     const clipboardData =
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       event.clipboardData || (window as any).clipboardData;
