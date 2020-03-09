@@ -15,6 +15,7 @@ interface PublicAPI {
   getEmails(): string[];
   setEmails(emails: string[]): void;
   addEmail(email: string): void;
+  addEmails(emails: string[]): void;
   removeEmail(email: string): void;
   removeEmailAt(position: number): void;
   removeEmailBlock(emailBlock: EmailBlock): void;
@@ -68,6 +69,12 @@ export default class EmailsInput implements PublicAPI {
     this.emailBlocks.push(new EmailBlock(email));
     this._onChange();
     // console.log(`Email added: ${email}`);
+  }
+  addEmails(emails: string[]) {
+    const emailBlocks = emails.map(email => new EmailBlock(email));
+    this.emailBlocks.push(...emailBlocks);
+
+    this._onChange();
   }
 
   removeEmail(email: string) {

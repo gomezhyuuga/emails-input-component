@@ -1,5 +1,5 @@
 import EmailsInput, { DEFAULT_OPTIONS } from '../EmailsInput';
-import { getByTestId } from '@testing-library/dom';
+import { getByTestId, fireEvent } from '@testing-library/dom';
 
 describe('EmailsInput', () => {
   let component: EmailsInput;
@@ -41,6 +41,15 @@ describe('EmailsInput', () => {
         expect(count).toEqual(INITIAL_EMAILS.length);
         component.addEmail('fernando@gomezh.dev');
         expect(component.getEmails().length).toEqual(count + 1);
+      });
+    });
+
+    describe('addEmails(emails : string[])', () => {
+      it('adds a list of emails on top of the existing ones', () => {
+        const count = component.getEmails().length;
+        expect(count).toEqual(INITIAL_EMAILS.length);
+        component.addEmails(['marc@miro.com', 'noreply@miro.com']);
+        expect(component.getEmails().length).toEqual(count + 2);
       });
     });
 
@@ -134,6 +143,26 @@ describe('EmailsInput', () => {
       expect(
         getByTestId(component.wrapper, DEFAULT_OPTIONS.emailInputClass)
       ).toBeTruthy();
+    });
+
+    // Couldn't make work Jest paste mock
+    it.skip('listens for paste event', () => {
+      const PASTED_TEXT = 'fernando@miro.com,alona@miro.com';
+      const input = getByTestId(
+        component.wrapper,
+        DEFAULT_OPTIONS.emailInputClass
+      );
+      fireEvent(input, new Event('pas'));
+      fireEvent.paste(input, {
+        clipboardData: {
+          getData: () => PASTED_TEXT,
+        },
+      });
+
+      expect(component.getEmails()).toEqual([
+        'fernando@miro.com',
+        'alona@miro.com',
+      ]);
     });
     it.todo('returns error if no valid Node provided');
     it.todo('initializes with initialEmails');
