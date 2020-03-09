@@ -149,7 +149,7 @@ export default class EmailsInput implements PublicAPI {
 
     event.preventDefault();
 
-    if (pastedText) this._parseInputText(pastedText);
+    this._parseInputText(pastedText);
   }
 
   private _onBlurInput(_event: FocusEvent) {

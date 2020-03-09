@@ -192,4 +192,14 @@ describe('EmailsInput', () => {
     it.todo('returns error if no valid Node provided');
     it.todo('initializes with initialEmails');
   });
+
+  describe('_parseInputText(text : string)', () => {
+    const INPUT_TEXT = 'fernando@miro.com,alona@miro.com';
+    it('adds emails in text', () => {
+      const length = component.getEmails().length;
+      expect(length).toEqual(INITIAL_EMAILS.length);
+      component['_parseInputText'](INPUT_TEXT);
+      expect(component.getEmails()).toHaveLength(length + 2);
+    });
+  });
 });
