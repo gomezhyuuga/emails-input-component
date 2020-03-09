@@ -13,13 +13,55 @@ export const DEFAULT_OPTIONS = {
  * v0.0.1 of Public API
  */
 interface PublicAPI {
+  /**
+   * Returns the emails in the input.
+   * @returns {string[]} Current list of emails in the input.
+   */
   getEmails(): string[];
+  /**
+   * Replaces the current list of emails for new ones.
+   *
+   * @param {string[]} emails - List of emails as strings.
+   */
   setEmails(emails: string[]): void;
+  /**
+   * Adds a new email to the input.
+   *
+   * If the email is invalid it adds the invalid CSS class.
+   * @param {string} email - Email to add to the input.
+   */
   addEmail(email: string): void;
+  /**
+   * Same as `addEmail()` but as a batch.
+   * @param {string[]} emails - List of emails to add.
+   */
   addEmails(emails: string[]): void;
+  /**
+   * Removes the FIRST occurence of `email` in the input.
+   *
+   * If the email is not present, nothing happens.
+   * @param {string} email - Email supposed to be in the list.
+   */
   removeEmail(email: string): void;
+  /**
+   * Removes the email at the specified `position`.
+   *
+   * @throws If `position` is invalid, i.e. is out of bounds of the current emails list, then it throws an exception.
+   * @param {number} position - zero-based position of the email to remove.
+   */
   removeEmailAt(position: number): void;
+  /**
+   * Private fn, removes the EmailBlock passed as argument.
+   * @param {EmailBlock} emailBlock - EmailBlock instance to remove.
+   */
   removeEmailBlock(emailBlock: EmailBlock): void;
+  /**
+   * Function to be called if:
+   *
+   * - new email is added
+   * - replacing all emails is called
+   * - email is removed
+   */
   onChange?: (newEmails: string[]) => void;
 }
 

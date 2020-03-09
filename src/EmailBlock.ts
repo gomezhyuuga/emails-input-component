@@ -69,6 +69,7 @@ export default class EmailBlock {
     return isValidEmail(this.email);
   }
 
+  /** @internal */
   private _onRemove() {
     if (this.onRemove) this.onRemove();
 
