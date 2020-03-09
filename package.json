@@ -5,9 +5,9 @@
   "main": "index.js",
   "scripts": {
     "start": "parcel index.html --open",
-    "docs": "typedoc --out jsdoc src",
+    "docs": "typedoc --out jsdocs src",
     "browserslist": "browserslist",
-    "build": "rm -rf docs/ && parcel build index.html --out-dir docs && npm run docs && cp -R jsdoc docs/jsdoc",
+    "build": "rm -rf docs/ && parcel build index.html --out-dir docs && npm run docs && cp -R jsdocs docs/",
     "test": "jest",
     "test:coverage": "jest --collectCoverage",
     "test:watch": "jest --watch",

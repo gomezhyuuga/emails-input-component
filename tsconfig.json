@@ -66,7 +66,7 @@
     /* Advanced Options */
     "forceConsistentCasingInFileNames": true /* Disallow inconsistently-cased references to the same file. */
   },
-  "exclude": ["node_modules", "**/*.test.ts", "docs/", "dist/", "coverage/", "jsdocs/"],
+  "exclude": ["node_modules", "**/*.test.ts", "docs/", "dist/", "coverage/", "jsdocs", "jsdoc"],
   "typedocOptions": {
     "mode": "modules",
     "out": "jsdocs"
