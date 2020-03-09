@@ -7,7 +7,7 @@
     "start": "parcel index.html --open",
     "docs": "typedoc --out jsdoc src",
     "browserslist": "browserslist",
-    "build": "rm -rf docs/ && parcel build index.html --out-dir docs",
+    "build": "rm -rf docs/ && parcel build index.html --out-dir docs && npm run docs && cp -R jsdoc docs/jsdoc",
     "test": "jest",
     "test:coverage": "jest --collectCoverage",
     "test:watch": "jest --watch",
