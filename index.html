@@ -85,10 +85,16 @@
       // Emails to paste
       // john@miro.com, invalid.email,mike@miro.com, alexander@miro.com
 
+      function onChangeCB(newEmails) {
+        console.log('Emails has changed', newEmails);
+      }
+
       const input1 = new EmailsInput(document.getElementById('emails-input1'), {
         initialEmails: INITIAL_EMAILS,
+        onChange: onChangeCB,
       });
       const input2 = new EmailsInput(document.getElementById('emails-input2'));
+      input2.onChange = onChangeCB;
       const input3 = new EmailsInput(document.getElementById('emails-input3'));
 
       const addBtn = document.getElementById('btn-addEmail');
