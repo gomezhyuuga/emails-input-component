@@ -56,6 +56,13 @@ describe('EmailsInput', () => {
         component.addEmails(['marc@miro.com', 'noreply@miro.com']);
         expect(component.getEmails().length).toEqual(count + 2);
       });
+      it('appens a new DOM element per email', () => {
+        const NEW_EMAILS = ['marc@miro.com', 'noreply@miro.com'];
+        component.addEmails(NEW_EMAILS);
+        for (const email of NEW_EMAILS) {
+          expect(getByText(component.wrapper, email)).toBeTruthy();
+        }
+      });
     });
 
     describe('remove...', () => {

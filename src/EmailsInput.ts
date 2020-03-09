@@ -85,6 +85,10 @@ export default class EmailsInput implements PublicAPI {
     const emailBlocks = emails.map(email => new EmailBlock(email));
     this.emailBlocks.push(...emailBlocks);
 
+    for (const emailBlock of emailBlocks) {
+      this._appendEmailNode(emailBlock);
+    }
+
     this._onChange();
   }
 
