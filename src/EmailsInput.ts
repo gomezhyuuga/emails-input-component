@@ -139,6 +139,8 @@ export default class EmailsInput implements PublicAPI {
   }
 
   // info: https://developer.mozilla.org/en-US/docs/Web/API/Element/paste_event
+  // TO-DO: learn how to test this with Jest
+  /* istanbul ignore next */
   private _onPaste(event: ClipboardEvent) {
     const clipboardData =
       // eslint-disable-next-line @typescript-eslint/no-explicit-any

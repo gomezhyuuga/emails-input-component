@@ -46,10 +46,20 @@ describe('EmailBlock', () => {
   });
 
   describe('onRemove()', () => {
+    it('calls parentInput remove with block as param', () => {
+      const parentRemoveFn = jest.fn();
+      component = new EmailBlock(VALID_EMAIL, parentInput);
+      component['parentInput'].removeEmailBlock = parentRemoveFn;
+      const btn = getByTestId(component.wrapper, _TESTID_REMOVE_BTN);
+      btn.click();
+      expect(parentRemoveFn).toHaveBeenCalled();
+    });
     it('calls onRemove callback when remove is clicked', () => {
       const fn = jest.fn();
       component = new EmailBlock(VALID_EMAIL, parentInput, { onRemove: fn });
+
       expect(fn).not.toHaveBeenCalled();
+
       const btn = getByTestId(component.wrapper, _TESTID_REMOVE_BTN);
       btn.click();
       expect(fn).toHaveBeenCalled();
