@@ -4,3 +4,11 @@ const EMAIL_REGEX = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))
 export function isValidEmail(email: string): boolean {
   return EMAIL_REGEX.test(email);
 }
+
+export function parsePastedText(text: string): string[] {
+  const _text = text.trim();
+  if (_text.length === 0) return [];
+
+  const split = _text.split(',');
+  return split.map(email => email.trim()).filter(email => email.length > 0);
+}

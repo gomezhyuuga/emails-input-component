@@ -1,4 +1,4 @@
-import { isValidEmail } from '../index';
+import { isValidEmail, parsePastedText } from '../index';
 
 describe('Utils', () => {
   describe('isValidEmail( str )', () => {
@@ -30,6 +30,29 @@ describe('Utils', () => {
       ].forEach(testCase => {
         expect(isValidEmail(testCase)).toBeFalsy();
       });
+    });
+  });
+
+  describe('parsePastedText(text : string)', () => {
+    const PASTED_TEXT = 'fernando@miro.com,alona@miro.com';
+
+    it('splits text by each email pasted', () => {
+      expect(parsePastedText(PASTED_TEXT)).toEqual([
+        'fernando@miro.com',
+        'alona@miro.com',
+      ]);
+      expect(parsePastedText('')).toEqual([]);
+    });
+    it('ignores empty emails', () => {
+      expect(parsePastedText('fernando@miro.com,,john@miro.com')).toEqual([
+        'fernando@miro.com',
+        'john@miro.com',
+      ]);
+    });
+    it('ignores white spaces', () => {
+      expect(
+        parsePastedText('fernando@miro.com     ,     ,      john@miro.com')
+      ).toEqual(['fernando@miro.com', 'john@miro.com']);
     });
   });
 });
