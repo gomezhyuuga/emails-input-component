@@ -74,9 +74,12 @@ export default class EmailsInput implements PublicAPI {
     this._onChange();
   }
   addEmail(email: string) {
-    this.emailBlocks.push(new EmailBlock(email));
+    const emailBlock = new EmailBlock(email);
+    this.emailBlocks.push(emailBlock);
+
+    this._appendEmailNode(emailBlock);
+
     this._onChange();
-    // console.log(`Email added: ${email}`);
   }
   addEmails(emails: string[]) {
     const emailBlocks = emails.map(email => new EmailBlock(email));
@@ -134,5 +137,9 @@ export default class EmailsInput implements PublicAPI {
 
     // Reset input
     this.inputNode.value = '';
+  }
+
+  private _appendEmailNode(emailBlock: EmailBlock) {
+    this.wrapper.insertBefore(emailBlock.wrapper, this.inputNode);
   }
 }

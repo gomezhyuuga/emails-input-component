@@ -1,5 +1,5 @@
 import EmailsInput, { DEFAULT_OPTIONS } from '../EmailsInput';
-import { getByTestId, fireEvent } from '@testing-library/dom';
+import { getByTestId, fireEvent, getByText } from '@testing-library/dom';
 
 describe('EmailsInput', () => {
   let component: EmailsInput;
@@ -41,6 +41,11 @@ describe('EmailsInput', () => {
         expect(count).toEqual(INITIAL_EMAILS.length);
         component.addEmail('fernando@gomezh.dev');
         expect(component.getEmails().length).toEqual(count + 1);
+      });
+      it('appens a new DOM element', () => {
+        const NEW_EMAIL = 'newEmail@miro.com';
+        component.addEmail(NEW_EMAIL);
+        expect(getByText(component.wrapper, NEW_EMAIL)).toBeTruthy();
       });
     });
 
