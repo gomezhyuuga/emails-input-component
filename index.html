@@ -3,6 +3,10 @@
     <title>Miro Assessment</title>
     <meta charset="UTF-8" />
     <link
+      rel="stylesheet"
+      href="https://unpkg.com/modern-css-reset/dist/reset.min.css"
+    />
+    <link
       href="https://fonts.googleapis.com/css?family=Open+Sans:400,700&display=swap"
       rel="stylesheet"
     />
@@ -10,18 +14,50 @@
   </head>
 
   <body>
-    <!-- form header -->
-    <div class="form">
-      <div class="form__content"></div>
-      <h1>Share Board with others</h1>
-      <input id="emails-input" name="emails-list" />
-      <div
-        id="sandbox"
-        style="background-color: #fafafa; height: 300px; border: 1px solid #333; border-radius: 10px;"
-      />
+    <h1>Share Board with others</h1>
+
+    <div class="modal">
+      <div class="modal__body">
+        <h1 class="modal__header">
+          Share <strong>Board Name</strong> with others
+        </h1>
+        <div id="emails-input1"></div>
+      </div>
+      <div class="modal__actions">
+        <div class="controls">
+          <button class="MiroButton" id="btn-addEmail">Add email</button>
+          <button class="MiroButton" id="btn-getEmailsCount">
+            Get emails count
+          </button>
+        </div>
+      </div>
     </div>
-    <div id="emails-input"></div>
 
     <script src="./src/index.ts"></script>
+
+    <script>
+      const INITIAL_EMAILS = [
+        'john@miro.com',
+        'invalid.email',
+        'mike@miro.com',
+        'alexander@miro.com',
+      ];
+
+      const input1 = new EmailsInput(document.getElementById('emails-input1'), {
+        initialEmails: INITIAL_EMAILS,
+      });
+
+      const addBtn = document.getElementById('btn-addEmail');
+      const countBtn = document.getElementById('btn-getEmailsCount');
+
+      addBtn.addEventListener('click', () => {
+        console.log('Adding new email...');
+        input1.addEmail('emailxx@gmail.com');
+        console.log(input1);
+      });
+      countBtn.addEventListener('click', () => {
+        window.alert(`Count of emails: ${input1.getEmails().length}`);
+      });
+    </script>
   </body>
 </html>
