@@ -14,12 +14,10 @@
   </head>
 
   <body>
-    <h1>Share Board with others</h1>
-
     <div class="modal">
       <div class="modal__body">
         <h1 class="modal__header">
-          Share <strong>Board Name</strong> with others
+          Share <strong>Board I ❤ Miro</strong> with others
         </h1>
         <div id="emails-input1"></div>
       </div>
@@ -27,6 +25,23 @@
         <div class="controls">
           <button class="MiroButton" id="btn-addEmail">Add email</button>
           <button class="MiroButton" id="btn-getEmailsCount">
+            Get emails count
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal">
+      <div class="modal__body">
+        <h1 class="modal__header">
+          Share <strong>Board Second</strong> with others
+        </h1>
+        <div id="emails-input2"></div>
+      </div>
+      <div class="modal__actions">
+        <div class="controls">
+          <button class="MiroButton" id="btn-addEmail2">Add email</button>
+          <button class="MiroButton" id="btn-getEmailsCount2">
             Get emails count
           </button>
         </div>
@@ -49,6 +64,7 @@
       const input1 = new EmailsInput(document.getElementById('emails-input1'), {
         initialEmails: INITIAL_EMAILS,
       });
+      const input2 = new EmailsInput(document.getElementById('emails-input2'));
 
       const addBtn = document.getElementById('btn-addEmail');
       const countBtn = document.getElementById('btn-getEmailsCount');
@@ -61,6 +77,15 @@
       countBtn.addEventListener('click', () => {
         window.alert(`Count of emails: ${input1.getEmails().length}`);
       });
+
+      document.getElementById('btn-addEmail2').addEventListener('click', () => {
+        input2.addEmail('secondEmail@ok.com');
+      });
+      document
+        .getElementById('btn-getEmailsCount2')
+        .addEventListener('click', () => {
+          alert(`Count for second input: ${input2.getEmails().length}`);
+        });
     </script>
   </body>
 </html>

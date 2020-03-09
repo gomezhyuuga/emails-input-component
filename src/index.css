@@ -101,6 +101,8 @@ body {
 
 .MiroButton {
   background: #4262ff;
+  border: none;
+  cursor: pointer;
   border-radius: 6px;
   text-align: center;
   padding: 8px 16px;
@@ -113,4 +115,7 @@ body {
   font-size: 14px;
   line-height: 24px;
   color: #ffffff;
+}
+.MiroButton:hover {
+  background: #5b76ff;
 }
