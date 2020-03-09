@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "parcel index.html --open",
+    "docs": "typedoc --out jsdoc src",
     "browserslist": "browserslist",
     "build": "rm -rf docs/ && parcel build index.html --out-dir docs",
     "test": "jest",
@@ -45,6 +46,7 @@
     "postcss-modules": "^1.5.0",
     "prettier": "1.19.1",
     "ts-jest": "^25.2.1",
+    "typedoc": "^0.16.11",
     "typescript": "~3.8.3"
   }
 }
