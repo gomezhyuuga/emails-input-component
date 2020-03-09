@@ -3,7 +3,6 @@ import EmailBlock from './EmailBlock';
 export const DEFAULT_OPTIONS = {
   initialEmails: [] as string[],
   // Optionals
-  componentTag: 'div',
   componentClass: 'EmailsInput',
   emailInputClass: 'EmailsInput__NewEmailInput',
 };
@@ -26,16 +25,32 @@ type EmailsInputOptions = Partial<typeof DEFAULT_OPTIONS> & {
 };
 
 export default class EmailsInput implements PublicAPI {
-  options: EmailsInputOptions;
+  options: typeof DEFAULT_OPTIONS;
   emailBlocks: EmailBlock[];
   onChange?: (newEmails: string[]) => void;
+  wrapper: HTMLElement;
+  inputNode: HTMLElement;
 
-  constructor(inputNode: HTMLElement, options?: EmailsInputOptions) {
+  constructor(inputContainerNode: HTMLElement, options?: EmailsInputOptions) {
     this.options = { ...DEFAULT_OPTIONS, ...options };
     this.emailBlocks =
       this.options.initialEmails?.map(emailStr => new EmailBlock(emailStr)) ||
       [];
+
+    this.wrapper = inputContainerNode;
+    this.wrapper.classList.add(this.options.componentClass);
+
     this.onChange = options?.onChange;
+
+    this.inputNode = document.createElement('input');
+    this.inputNode.classList.add(this.options.emailInputClass);
+    this.inputNode.setAttribute('data-testid', this.options.emailInputClass);
+
+    // Create initial EmailBlocks as DOM elements
+    for (const emailBlock of this.emailBlocks) {
+      this.wrapper.appendChild(emailBlock.wrapper);
+    }
+    this.wrapper.appendChild(this.inputNode);
   }
 
   getEmails(): string[] {

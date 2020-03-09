@@ -1,22 +1,23 @@
-import EmailsInput from '../EmailsInput';
+import EmailsInput, { DEFAULT_OPTIONS } from '../EmailsInput';
+import { getByTestId } from '@testing-library/dom';
 
 describe('EmailsInput', () => {
+  let component: EmailsInput;
+  let input: HTMLElement;
+  const INITIAL_EMAILS = [
+    'john@miro.com',
+    'invalid.email',
+    'mike@miro.com',
+    'alexander@miro.com',
+  ];
+
+  beforeEach(() => {
+    input = document.createElement('input');
+    component = new EmailsInput(input, { initialEmails: INITIAL_EMAILS });
+    expect(component).toBeTruthy();
+  });
+
   describe('Public API', () => {
-    let component: EmailsInput;
-    let input: HTMLElement;
-    const INITIAL_EMAILS = [
-      'john@miro.com',
-      'invalid.email',
-      'mike@miro.com',
-      'alexander@miro.com',
-    ];
-
-    beforeEach(() => {
-      input = document.createElement('input');
-      component = new EmailsInput(input, { initialEmails: INITIAL_EMAILS });
-      expect(component).toBeTruthy();
-    });
-
     describe('getEmails() => string[]', () => {
       it('returns current list of emails', () => {
         expect(component.getEmails()).toStrictEqual(INITIAL_EMAILS);
@@ -129,6 +130,11 @@ describe('EmailsInput', () => {
   });
 
   describe('constructor', () => {
+    it('contains and input field', () => {
+      expect(
+        getByTestId(component.wrapper, DEFAULT_OPTIONS.emailInputClass)
+      ).toBeTruthy();
+    });
     it.todo('returns error if no valid Node provided');
     it.todo('initializes with initialEmails');
   });
